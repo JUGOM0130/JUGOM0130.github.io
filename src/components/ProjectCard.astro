@@ -1,0 +1,82 @@
+---
+import type { Project } from '../data/profile';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<article class="card">
+  <header>
+    <p class="kind">{project.kind}</p>
+    <h3>{project.name}</h3>
+  </header>
+  <p>{project.summary}</p>
+  <ul class="points">
+    {project.points.map((p) => <li>{p}</li>)}
+  </ul>
+  <ul class="stack">
+    {project.stack.map((s) => <li>{s}</li>)}
+  </ul>
+  <footer>
+    {project.url ? (
+      <a href={project.url} target="_blank" rel="noopener">GitHub で見る →</a>
+    ) : (
+      <span class="private">ソース非公開</span>
+    )}
+  </footer>
+</article>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  .kind {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  h3 {
+    margin: 0.15rem 0 0;
+    font-size: 1.15rem;
+  }
+  p {
+    margin: 0;
+  }
+  .points {
+    margin: 0;
+    padding-left: 1.2rem;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+  .stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .stack li {
+    padding: 0.15rem 0.55rem;
+    font-size: 0.8rem;
+    background: var(--tag);
+    border-radius: 999px;
+  }
+  footer {
+    margin-top: auto;
+    font-size: 0.9rem;
+  }
+  .private {
+    color: var(--muted);
+  }
+</style>
